@@ -513,7 +513,7 @@ struct controller_impl {
                head_to_lib.push_back(bsp);
                id = bsp->header.previous;
             }
-                  
+
             auto blog_head = blog.head();
             auto blog_head_time = blog_head->timestamp.to_time_point();
             replay_head_time = blog_head_time;
@@ -528,7 +528,7 @@ struct controller_impl {
          }
       } else { // irreversible mode
          uint32_t target_lib = fork_db.root()->block_num;
-         if (head->block_num > target_lib) {  
+         if (head->block_num > target_lib) {
             // speculative mode => irreversible mode
             wlog("db_read_mode has been changed, rolling back state from block #${o} to lib block #${l}", ("o", head->block_num)("l", target_lib));
             // let's go backward to lib(fork_db root)
@@ -538,7 +538,7 @@ struct controller_impl {
             fork_db.rollback_head_to_root();
          }
       }
-      
+
       bool report_integrity_hash = !!snapshot || (lib_num > head->block_num);
 
       // Trim any irreversible blocks from start of reversible blocks database
@@ -575,7 +575,7 @@ struct controller_impl {
       if( report_integrity_hash ) {
          const auto hash = calculate_integrity_hash();
          ilog( "database initialized with hash: ${hash}", ("hash", hash) );
-      } 
+      }
    }
 
    ~controller_impl() {
@@ -1456,7 +1456,7 @@ struct controller_impl {
 
          auto bsp = std::make_shared<block_state>(
                         std::move( ab._pending_block_header_state ),
-                        std::move( ab._unsigned_block ),
+                        b,
                         std::move( ab._trx_metas ),
                         true // signature should have already been verified (assuming untrusted) prior to apply_block
                     );
